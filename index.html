@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StudyMate</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>StudyMate</h1>
+    <button id="theme-toggle">Toggle Theme</button>
+  </header>
+
+  <main id="app">
+    <section id="mood-section">
+      <h2>How are you feeling?</h2>
+      <div>
+        <button class="mood-btn" data-mood="happy">😊 Happy</button>
+        <button class="mood-btn" data-mood="stressed">😓 Stressed</button>
+        <button class="mood-btn" data-mood="tired">😴 Tired</button>
+      </div>
+      <p id="selected-mood">No mood selected yet.</p>
+    </section>
+
+    <section id="quote-section">
+      <h2>Motivational Quote</h2>
+      <blockquote id="quote-display">Loading quote...</blockquote>
+    </section>
+
+    <section id="todo-section">
+      <h2>Smart To-Do List</h2>
+      <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="New task..." required />
+        <button type="submit">Add</button>
+      </form>
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+      <ul id="todo-list"></ul>
+    </section>
+
+    <section id="tip-section">
+      <h2>Daily Coding Tip</h2>
+      <pre id="tip-display">Loading tips...</pre>
+      <button id="new-tip">New Tip</button>
+    </section>
+
+    <section id="timer-section">
+      <h2>Focus Timer</h2>
+      <button id="start-timer">Start 25-Min Pomodoro</button>
+      <p id="timer-display">25:00</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
