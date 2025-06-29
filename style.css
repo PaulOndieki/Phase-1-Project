@@ -1,9 +1,12 @@
+/* ========== Global Reset ========== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ========== Base Styles ========== */
 body {
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #6b73ff, #000dff);
@@ -21,6 +24,7 @@ body {
   color: #eee;
 }
 
+/* ========== Header ========== */
 header {
   width: 100%;
   max-width: 900px;
@@ -28,12 +32,22 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background: inherit;
+  z-index: 10;
+  padding: 1rem;
+  backdrop-filter: blur(6px);
 }
 
 h1 {
   font-size: 2.5rem;
   color: #fff;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] h1 {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 #theme-toggle {
@@ -44,13 +58,18 @@ h1 {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s;
+  transition: all 0.4s ease;
 }
 
 #theme-toggle:hover {
   background: rgba(255, 255, 255, 1);
 }
 
+#theme-toggle:active {
+  transform: scale(0.95) rotate(-5deg);
+}
+
+/* ========== Main Container ========== */
 main {
   width: 100%;
   max-width: 900px;
@@ -68,6 +87,7 @@ main {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
 }
 
+/* ========== Sections ========== */
 section {
   margin-bottom: 2rem;
 }
@@ -83,8 +103,10 @@ h2 {
 [data-theme="dark"] h2 {
   color: #ccc;
   border-color: #4a55ff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
+/* ========== Mood Buttons ========== */
 .mood-btn {
   flex: 1;
   font-size: 1.2rem;
@@ -104,6 +126,17 @@ h2 {
   transform: scale(1.05);
 }
 
+/* ========== Mood Display ========== */
+#selected-mood {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+[data-theme="dark"] #selected-mood {
+  color: #eee;
+}
+
+/* ========== Quote Display ========== */
 #quote-display {
   font-style: italic;
   font-size: 1.3rem;
@@ -120,6 +153,7 @@ h2 {
   border-color: #4a55ff;
 }
 
+/* ========== To-Do Section ========== */
 #todo-form {
   display: flex;
   gap: 0.5rem;
@@ -131,12 +165,13 @@ h2 {
   padding: 0.7rem;
   border: 2px solid #6b73ff;
   border-radius: 25px;
-  transition: border 0.3s;
+  transition: border 0.3s, box-shadow 0.3s;
 }
 
 #todo-input:focus {
   border-color: #4a55ff;
   outline: none;
+  box-shadow: 0 0 5px #4a55ff;
 }
 
 #todo-form button {
@@ -146,11 +181,12 @@ h2 {
   padding: 0 0.5rem;
   border-radius: 25px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 #todo-form button:hover {
   background: #4a55ff;
+  transform: scale(1.05);
 }
 
 #progress-container {
@@ -200,6 +236,7 @@ h2 {
   color: #cc0000;
 }
 
+/* ========== Tips and Report ========== */
 #tip-section,
 #report-section {
   background: rgba(255, 255, 255, 0.85);
@@ -226,6 +263,30 @@ h2 {
   color: #ddd;
 }
 
+/* ========== Timer ========== */
+#timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+#timer-display {
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  color: #222;
+}
+
+[data-theme="dark"] #timer-display {
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.timer-controls button {
+  margin: 0.5rem;
+}
+
+/* ========== Buttons and Inputs ========== */
 button {
   padding: 0.6rem 1.2rem;
   background-color: #6b73ff;
@@ -233,11 +294,12 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s;
 }
 
 button:hover {
   background-color: #4a55ff;
+  transform: scale(1.03);
 }
 
 input[type="email"] {
@@ -249,18 +311,16 @@ input[type="email"] {
   border-radius: 8px;
 }
 
-#timer-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-}
-
-#timer-display {
-  font-size: 2.5rem;
-  margin: 1rem 0;
-}
-
-.timer-controls button {
-  margin: 0.5rem;
+/* ========== Optional: Back to Top ========== */
+#back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: none;
+  background: #6b73ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 0.8rem;
+  font-size: 1.
 }
