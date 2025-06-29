@@ -13,18 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const tipDisplay = document.querySelector('#tip-display');
   const newTipBtn = document.querySelector('#new-tip');
   const startTimerBtn = document.querySelector('#start-timer');
+  const pauseTimerBtn = document.querySelector('#pause-timer');
+  const resumeTimerBtn = document.querySelector('#resume-timer');
+  const resetTimerBtn = document.querySelector('#reset-timer');
   const timerDisplay = document.querySelector('#timer-display');
 
-  // Add report sending UI
-  const reportSection = document.createElement('section');
-  reportSection.innerHTML = `
-    <h2>Send Daily Report</h2>
-    <input type="email" id="report-email" placeholder="Enter your email" required style="padding:0.5rem; border-radius:5px; border:1px solid #aaa; width:70%; margin-right:10px;">
-    <button id="send-report" style="padding:0.6rem 1.2rem; background:#6b73ff; color:white; border:none; border-radius:25px; font-weight:bold;">Send Report</button>
-  `;
-  document.querySelector('main').appendChild(reportSection);
-
-  // Data
   const quotesByMood = {
     happy: ["Smile, it’s a good day!", "Celebrate small wins!", "Spread joy like confetti!"],
     stressed: ["Breathe. Reset. Restart.", "You are stronger than your stress.", "Take it one step at a time."],
@@ -46,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let todos = [];
   let timer = null;
   let timerSeconds = 25 * 60;
+  let remainingSeconds = timerSeconds;
 
   // Theme
   themeToggleBtn.addEventListener('click', () => {
@@ -135,13 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
     todoList.innerHTML = '';
     todos.forEach(todo => {
       const li = document.createElement('li');
-
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = todo.completed;
-      checkbox.addEventListener('change', () => {
-        toggleTodoCompletion(todo.id, checkbox.checked);
-      });
+      checkbox.addEventListener('change', () => toggleTodoCompletion(todo.id, checkbox.checked));
 
       const span = document.createElement('span');
       span.textContent = todo.text;
@@ -149,9 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const deleteBtn = document.createElement('button');
       deleteBtn.textContent = '❌';
-      deleteBtn.addEventListener('click', () => {
-        deleteTodo(todo.id);
-      });
+      deleteBtn.addEventListener('click', () => deleteTodo(todo.id));
 
       li.appendChild(checkbox);
       li.appendChild(span);
@@ -181,21 +170,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startTimerBtn.addEventListener('click', () => {
     if (timer) return;
+    remainingSeconds = timerSeconds;
+    runTimer();
+  });
 
-    let secondsLeft = timerSeconds;
-    updateTimerDisplay(secondsLeft);
+  pauseTimerBtn.addEventListener('click', () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  });
 
+  resumeTimerBtn.addEventListener('click', () => {
+    if (!timer && remainingSeconds > 0) {
+      runTimer();
+    }
+  });
+
+  resetTimerBtn.addEventListener('click', () => {
+    clearInterval(timer);
+    timer = null;
+    remainingSeconds = timerSeconds;
+    updateTimerDisplay(timerSeconds);
+  });
+
+  function runTimer() {
+    updateTimerDisplay(remainingSeconds);
     timer = setInterval(() => {
-      secondsLeft--;
-      updateTimerDisplay(secondsLeft);
-      if (secondsLeft <= 0) {
+      remainingSeconds--;
+      updateTimerDisplay(remainingSeconds);
+      if (remainingSeconds <= 0) {
         clearInterval(timer);
         timer = null;
         alert("Pomodoro complete! Take a break.");
         updateTimerDisplay(timerSeconds);
       }
     }, 1000);
-  });
+  }
 
   // Report Sending
   document.querySelector('#send-report').addEventListener('click', () => {
