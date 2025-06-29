@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>StudyMate</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
   <header>
@@ -21,6 +23,7 @@
         <button class="mood-btn" data-mood="tired">😴 Tired</button>
       </div>
       <p id="selected-mood">No mood selected yet.</p>
+      <canvas id="mood-chart" width="400" height="150"></canvas>
     </section>
 
     <section id="quote-section">
@@ -42,14 +45,26 @@
 
     <section id="tip-section">
       <h2>Daily Coding Tip</h2>
-      <pre id="tip-display">Loading tips...</pre>
+      <pre id="tip-display">Loading tip...</pre>
       <button id="new-tip">New Tip</button>
     </section>
 
     <section id="timer-section">
       <h2>Focus Timer</h2>
-      <button id="start-timer">Start 25-Min Pomodoro</button>
+      <div class="timer-controls">
+        <button id="start-timer">Start Pomodoro</button>
+        <button id="pause-timer">Pause</button>
+        <button id="resume-timer">Resume</button>
+        <button id="reset-timer">Reset</button>
+      </div>
       <p id="timer-display">25:00</p>
+      <p id="timer-round">Round: 0</p>
+    </section>
+
+    <section id="report-section">
+      <h2>Send Daily Report</h2>
+      <input type="email" id="report-email" placeholder="Enter your email" required />
+      <button id="send-report">Send Report</button>
     </section>
   </main>
 

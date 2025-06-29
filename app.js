@@ -1,22 +1,30 @@
+// Load EmailJS library
+emailjs.init('oz66B3hlvG-1qQFAv');
+
 document.addEventListener('DOMContentLoaded', () => {
-  // === DOM Elements ===
   const themeToggleBtn = document.querySelector('#theme-toggle');
   const moodButtons = document.querySelectorAll('.mood-btn');
   const selectedMoodDisplay = document.querySelector('#selected-mood');
   const quoteDisplay = document.querySelector('#quote-display');
-
   const todoForm = document.querySelector('#todo-form');
   const todoInput = document.querySelector('#todo-input');
   const todoList = document.querySelector('#todo-list');
   const progressBar = document.querySelector('#progress-bar');
-
   const tipDisplay = document.querySelector('#tip-display');
   const newTipBtn = document.querySelector('#new-tip');
-
   const startTimerBtn = document.querySelector('#start-timer');
   const timerDisplay = document.querySelector('#timer-display');
 
-  // === Data ===
+  // Add report sending UI
+  const reportSection = document.createElement('section');
+  reportSection.innerHTML = `
+    <h2>Send Daily Report</h2>
+    <input type="email" id="report-email" placeholder="Enter your email" required style="padding:0.5rem; border-radius:5px; border:1px solid #aaa; width:70%; margin-right:10px;">
+    <button id="send-report" style="padding:0.6rem 1.2rem; background:#6b73ff; color:white; border:none; border-radius:25px; font-weight:bold;">Send Report</button>
+  `;
+  document.querySelector('main').appendChild(reportSection);
+
+  // Data
   const quotesByMood = {
     happy: ["Smile, it’s a good day!", "Celebrate small wins!", "Spread joy like confetti!"],
     stressed: ["Breathe. Reset. Restart.", "You are stronger than your stress.", "Take it one step at a time."],
@@ -32,21 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
     "Comment the 'why', not the 'what'."
   ];
 
-  const TODOS_API = 'http://localhost:3000/todos'; // json-server endpoint
+  const TODOS_API = 'http://localhost:3000/todos';
 
-  // === State ===
   let currentMood = null;
   let todos = [];
   let timer = null;
   let timerSeconds = 25 * 60;
 
-  // === Theme Toggle ===
+  // Theme
   themeToggleBtn.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
   });
 
-  // === Mood Buttons ===
+  // Mood
   moodButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const mood = btn.dataset.mood;
@@ -68,8 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // === To-Do List Logic ===
-
+  // To-Do
   todoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const text = todoInput.value.trim();
@@ -139,9 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const span = document.createElement('span');
       span.textContent = todo.text;
-      if (todo.completed) {
-        span.classList.add('completed');
-      }
+      if (todo.completed) span.classList.add('completed');
 
       const deleteBtn = document.createElement('button');
       deleteBtn.textContent = '❌';
@@ -160,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     progressBar.style.width = `${progress}%`;
   }
 
-  // === Coding Tips ===
+  // Tips
   function showRandomTip() {
     const tip = codingTips[Math.floor(Math.random() * codingTips.length)];
     tipDisplay.textContent = tip;
@@ -168,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   newTipBtn.addEventListener('click', showRandomTip);
 
-  // === Focus Timer ===
+  // Timer
   function updateTimerDisplay(seconds) {
     const m = String(Math.floor(seconds / 60)).padStart(2, '0');
     const s = String(seconds % 60).padStart(2, '0');
@@ -193,7 +197,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   });
 
-  // === Init ===
+  // Report Sending
+  document.querySelector('#send-report').addEventListener('click', () => {
+    const em = document.querySelector('#report-email').value;
+    if (!em || !em.includes('@')) {
+      alert('Please enter a valid email.');
+      return;
+    }
+
+    const moodText = currentMood ? `Current mood: ${currentMood}` : 'No mood selected.';
+    const completed = todos.filter(t => t.completed).length;
+    const pending = todos.length - completed;
+    const taskSummary = `Total tasks: ${todos.length}\nCompleted: ${completed}\nPending: ${pending}`;
+    const reportText = `${moodText}\n\n${taskSummary}`;
+
+    emailjs.send('gmail_service', 'template_516q1hh', {
+      user_email: em,
+      report: reportText
+    })
+    .then(() => alert("Report sent! 🎉"))
+    .catch(err => {
+      console.error(err);
+      alert("Failed to send report.");
+    });
+  });
+
+  // Init
   fetchTodos();
   showRandomTip();
   updateTimerDisplay(timerSeconds);
