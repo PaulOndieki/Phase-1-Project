@@ -1,50 +1,266 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #6b73ff, #000dff); color: #222; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; transition: background-color .4s, color .4s; }
-[data-theme="dark"] { background: linear-gradient(135deg, #1f1f1f, #121212); color: #eee; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-header { width: 100%; max-width: 900px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
-h1 { font-size: 2.5rem; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,.5); }
-#theme-toggle { background: rgba(255,255,255,.85); border:none; padding:.6rem 1.2rem; border-radius:25px; font-weight:600; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,.2); transition:background .3s; }
-#theme-toggle:hover { background: rgba(255,255,255,1); }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #6b73ff, #000dff);
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  transition: background-color 0.4s, color 0.4s;
+}
 
-main { width: 100%; max-width: 900px; background: rgba(255,255,255,.9); padding:2rem; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,.1); overflow-y:auto; max-height:85vh; transition:background .4s, color .4s; }
-[data-theme="dark"] main { background:#222; box-shadow:0 6px 18px rgba(0,0,0,.8); }
+[data-theme="dark"] {
+  background: linear-gradient(135deg, #1f1f1f, #121212);
+  color: #eee;
+}
 
-section { margin-bottom:2rem; }
-h2 { font-size:1.8rem; margin-bottom:1rem; color:#333; border-bottom:2px solid #6b73ff; padding-bottom:.3rem; }
-[data-theme="dark"] h2 { color:#ccc; border-color:#4a55ff; }
+header {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.mood-btn { flex:1; font-size:1.2rem; padding:.8rem 0; border:none; border-radius:10px; background:#6b73ff; color:white; margin-right: .5rem; cursor:pointer; transition:background .3s, transform .2s; }
-.mood-btn:hover, .mood-btn:focus { background:#4a55ff; transform:scale(1.05); }
+h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
 
-#quote-display { font-style:italic; font-size:1.3rem; color:#444; padding-left:1rem; border-left:4px solid #6b73ff; min-height:60px; display:flex; align-items:center; }
-[data-theme="dark"] #quote-display { color:#ddd; border-color:#4a55ff; }
+#theme-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
 
-#todo-form { display:flex; gap:.5rem; margin-bottom:1rem; }
-#todo-input { flex:1; padding:.7rem; border:2px solid #6b73ff; border-radius:25px; transition:border .3s; }
-#todo-input:focus { border-color:#4a55ff; outline:none; }
-#todo-form button { background:#6b73ff; border:none; color:white; padding:0 .5rem; border-radius:25px; cursor:pointer; transition:background .3s; }
-#todo-form button:hover { background:#4a55ff; }
+#theme-toggle:hover {
+  background: rgba(255, 255, 255, 1);
+}
 
-#progress-container { background:#ddd; height:12px; border-radius:12px; overflow:hidden; margin-bottom:1rem; }
-#progress-bar { height:100%; width:0; background:linear-gradient(90deg, #6b73ff, #4a55ff); transition:width .6s ease-in-out; }
+main {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 85vh;
+  transition: background 0.4s, color 0.4s;
+}
 
-#todo-list { list-style:none; max-height:200px; overflow-y:auto; }
-#todo-list li { display:flex; align-items:center; gap:1rem; padding:.5rem 0; border-bottom:1px solid #ddd; }
-#todo-list li .completed { text-decoration:line-through; color:gray; font-style:italic; }
-#todo-list li button { background:transparent; border:none; color:#ff4c4c; cursor:pointer; transition:color .3s; }
-#todo-list li button:hover { color:#cc0000; }
+[data-theme="dark"] main {
+  background: #222;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+}
 
-#tip-section, #report-section { background:#f7f8ff; border-radius:12px; padding:1rem; box-shadow:0 3px 8px rgba(107,115,255,.2); }
-[data-theme="dark"] #tip-section, [data-theme="dark"] #report-section { background:#2a2a4a; color:#ddd; box-shadow:0 3px 8px rgba(74,85,255,.7); }
+section {
+  margin-bottom: 2rem;
+}
 
-.timer-controls button, #send-report { background:#6b73ff; border:none; color:white; padding:.6rem 1.2rem; border-radius:25px; cursor:pointer; font-weight:600; margin-right:.5rem; transition:background .3s; }
-.timer-controls button:hover, #send-report:hover { background:#4a55ff; }
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+  border-bottom: 2px solid #6b73ff;
+  padding-bottom: 0.3rem;
+}
 
-#timer-display, #timer-round { font-size:1.5rem; color:#333; }
-[data-theme="dark"] #timer-display, [data-theme="dark"] #timer-round { color:#ddd; }
+[data-theme="dark"] h2 {
+  color: #ccc;
+  border-color: #4a55ff;
+}
 
-@media(max-width:600px) {
-  body, main { padding:1rem; }
-  h1 { font-size:2rem; }
+.mood-btn {
+  flex: 1;
+  font-size: 1.2rem;
+  padding: 0.8rem 0;
+  border: none;
+  border-radius: 10px;
+  background: #6b73ff;
+  color: white;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.mood-btn:hover,
+.mood-btn:focus {
+  background: #4a55ff;
+  transform: scale(1.05);
+}
+
+#quote-display {
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #444;
+  padding-left: 1rem;
+  border-left: 4px solid #6b73ff;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+[data-theme="dark"] #quote-display {
+  color: #ddd;
+  border-color: #4a55ff;
+}
+
+#todo-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 0.7rem;
+  border: 2px solid #6b73ff;
+  border-radius: 25px;
+  transition: border 0.3s;
+}
+
+#todo-input:focus {
+  border-color: #4a55ff;
+  outline: none;
+}
+
+#todo-form button {
+  background: #6b73ff;
+  border: none;
+  color: white;
+  padding: 0 0.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#todo-form button:hover {
+  background: #4a55ff;
+}
+
+#progress-container {
+  background: #ddd;
+  height: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6b73ff, #4a55ff);
+  transition: width 0.6s ease-in-out;
+}
+
+#todo-list {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#todo-list li .completed {
+  text-decoration: line-through;
+  color: gray;
+  font-style: italic;
+}
+
+#todo-list li button {
+  background: transparent;
+  border: none;
+  color: #ff4c4c;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#todo-list li button:hover {
+  color: #cc0000;
+}
+
+#tip-section,
+#report-section {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+[data-theme="dark"] #tip-section,
+[data-theme="dark"] #report-section {
+  background: #333;
+}
+
+#tip-display {
+  font-family: monospace;
+  background: #eee;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+[data-theme="dark"] #tip-display {
+  background: #444;
+  color: #ddd;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  background-color: #6b73ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #4a55ff;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+#timer-display {
+  font-size: 2.5rem;
+  margin: 1rem 0;
+}
+
+.timer-controls button {
+  margin: 0.5rem;
 }
