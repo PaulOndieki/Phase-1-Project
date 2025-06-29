@@ -8,7 +8,7 @@
 
 Click the image below to watch the video presentation:
 
-[![Watch the video](thumbnail.png)](https://drive.google.com/uc?id=1WCREbaBByiV9AJWqQf6hrEr7PVd9PBip)
+[![Watch the video](thumbnail.png)](https://drive.google.com/file/d/1WCREbaBByiV9AJWqQf6hrEr7PVd9PBip/view?usp=sharing)
 
 
 ## 📖 Project Description
